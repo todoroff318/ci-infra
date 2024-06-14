@@ -1,0 +1,38 @@
+name: Triggered Workflow
+
+on:
+  repository_dispatch:
+    types: [trigger-uat-event]
+
+  workflow_dispatch:
+
+jobs:
+  triggered-job:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [ 18.x ]
+
+    steps:
+      - name: Check Dispatch Payload
+        run: echo "Triggered by a dispatch event with payload ${{ github.event.client_payload.description }}"
+
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - name: Install cypress dependencies
+        run: npm ci
+
+      - name: Set script permissions
+        run: chmod +x ./deploy-script.sh
+
+      - name: Start Application
+        run: ./deploy-script.sh &
+
+      - name: Run Cypress UAT tests
+        run: npm run cy:run

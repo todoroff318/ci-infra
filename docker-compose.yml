@@ -1,0 +1,32 @@
+version: '3.0'
+
+services:
+  frontend:
+    image: todoroff318/testfr:testfr
+    container_name: puskankafr
+    ports:
+      - "8888:8888"
+    depends_on:
+      - backend
+
+  backend:
+    image: todoroff318/test:test
+    container_name: puskankabnd
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    environment:
+      -"FOO": "bar"
+    ports:
+      - "27017:27017"
+    volumes:
+      - data:/data/db
+
+volumes:
+  data:
+
