@@ -29,12 +29,6 @@ jobs:
         run: npm ci
 
       - name: Set script permissions
-        run: chmod +x ./redeploy.sh
-
-      - name: Start Application
-        run: ./redeploy.sh &
-
-      - name: Set script permissions
         run: chmod +x ./deploy-script.sh
 
       - name: Start Application
