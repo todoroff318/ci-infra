@@ -12,7 +12,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [ 18.x ]
+        node-version: [18.x]
 
     steps:
       - name: Check Dispatch Payload
@@ -23,10 +23,16 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'npm'
+          cache: "npm"
 
       - name: Install cypress dependencies
         run: npm ci
+
+      - name: Set script permissions
+        run: chmod +x ./redeploy.sh
+
+      - name: Start Application
+        run: ./redeploy.sh &
 
       - name: Set script permissions
         run: chmod +x ./deploy-script.sh

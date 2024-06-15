@@ -1,0 +1,2 @@
+# open crontab -e
+# run 0 * * * * /path/to/redeploy.sh >> /path/to/redeploy_log.log 2>&1
