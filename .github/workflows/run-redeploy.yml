@@ -30,7 +30,7 @@ jobs:
       - name: Set script permissions
         run: chmod +x ./scripts/redeploy.sh
 
-      - name: Start Application
+      - name: Start Redeployment
         run: ./scripts/redeploy.sh &
 
       - name: Log out of Docker Hub
