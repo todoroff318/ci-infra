@@ -5,7 +5,7 @@ services:
     image: todoroff318/testfr:testfr
     container_name: puskankafr
     ports:
-      - "8888:8888"
+      - "8081:8081"
     depends_on:
       - backend
 
@@ -15,18 +15,20 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      - mongo
+      - postgres
 
-  mongo:
-    image: mongo:latest
-    container_name: mongo
-    environment:
-      -"FOO": "bar"
+  postgres:
+    image: postgres:latest
+    container_name: postgres
     ports:
-      - "27017:27017"
+      - "5433:5432"
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
     volumes:
-      - data:/data/db
+      - pgdata:/var/lib/postgresql/data
 
 volumes:
   data:
+
 
